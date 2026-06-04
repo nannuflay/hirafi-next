@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getDictionary, hasLocale } from '../../dictionaries'
-import { SignupForm } from '@/components/auth/SignupForm'
+import { SignupFlow } from '@/components/auth/SignupFlow'
 
 export default async function SignupPage({
   params,
@@ -12,5 +12,5 @@ export default async function SignupPage({
 
   const dict = await getDictionary(lang)
 
-  return <SignupForm lang={lang} dict={dict.auth.signup} />
+  return <SignupFlow lang={lang} dict={dict} />
 }
