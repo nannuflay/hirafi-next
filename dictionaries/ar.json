@@ -29,7 +29,7 @@
     "items": {
       "plumbing":        { "label": "السباكة",        "description": "تسريبات، أنابيب، تجهيزات" },
       "electricity":     { "label": "الكهرباء",       "description": "أسلاك، لوحات، مآخذ" },
-      "applianceRepair": { "label": "إصلاح الأجهزة", "description": "غسالات، ثلاجات" },
+      "appliance_repair": { "label": "إصلاح الأجهزة", "description": "غسالات، ثلاجات" },
       "transport":       { "label": "النقل والتحريك","description": "تأجير شاحنات، انتقال" },
       "carpentry":       { "label": "النجارة",        "description": "أثاث، أبواب، خشب" },
       "painting":        { "label": "الدهان",         "description": "داخلي وخارجي" },

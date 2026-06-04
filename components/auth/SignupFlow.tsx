@@ -42,7 +42,7 @@ const VENDOR_STEPS: Step[] = ['basics', 'role', 'category', 'profile']
 const CATEGORIES = [
   { key: 'plumbing',        icon: Wrench,     color: 'bg-blue-100 text-blue-600' },
   { key: 'electricity',     icon: Zap,        color: 'bg-yellow-100 text-yellow-600' },
-  { key: 'applianceRepair', icon: Settings2,  color: 'bg-purple-100 text-purple-600' },
+  { key: 'appliance_repair', icon: Settings2,  color: 'bg-purple-100 text-purple-600' },
   { key: 'transport',       icon: Truck,      color: 'bg-green-100 text-green-600' },
   { key: 'carpentry',       icon: Hammer,     color: 'bg-orange-100 text-orange-600' },
   { key: 'painting',        icon: Paintbrush, color: 'bg-pink-100 text-pink-600' },
@@ -462,8 +462,6 @@ export function SignupFlow({
 
   return (
     <div className="w-full max-w-md">
-      <Progress steps={steps} current={stepIndex} titles={stepTitles} />
-
       {/* Step card */}
       <div
         key={step}

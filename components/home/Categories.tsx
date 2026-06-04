@@ -11,7 +11,7 @@ type CatDict = Dictionary['categories']
 const CATEGORY_META = [
   { key: 'plumbing',        icon: Wrench,     color: 'bg-blue-50 text-blue-600' },
   { key: 'electricity',     icon: Zap,        color: 'bg-yellow-50 text-yellow-600' },
-  { key: 'applianceRepair', icon: Settings2,  color: 'bg-purple-50 text-purple-600' },
+  { key: 'appliance_repair', icon: Settings2,  color: 'bg-purple-50 text-purple-600' },
   { key: 'transport',       icon: Truck,      color: 'bg-green-50 text-green-600' },
   { key: 'carpentry',       icon: Hammer,     color: 'bg-orange-50 text-orange-600' },
   { key: 'painting',        icon: Paintbrush, color: 'bg-pink-50 text-pink-600' },

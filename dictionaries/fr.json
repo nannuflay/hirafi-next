@@ -29,7 +29,7 @@
     "items": {
       "plumbing":        { "label": "Plomberie",          "description": "Fuites, tuyaux, robinetterie" },
       "electricity":     { "label": "Électricité",        "description": "Câblage, tableaux, prises" },
-      "applianceRepair": { "label": "Réparation appareils","description": "Machines à laver, frigos" },
+      "appliance_repair": { "label": "Réparation appareils","description": "Machines à laver, frigos" },
       "transport":       { "label": "Déménagement",       "description": "Location camion, relocation" },
       "carpentry":       { "label": "Menuiserie",         "description": "Meubles, portes, bois" },
       "painting":        { "label": "Peinture",           "description": "Intérieur & extérieur" },

@@ -29,7 +29,7 @@
     "items": {
       "plumbing":        { "label": "Plumbing",          "description": "Leaks, pipes, fixtures" },
       "electricity":     { "label": "Electricity",       "description": "Wiring, panels, outlets" },
-      "applianceRepair": { "label": "Appliance Repair",  "description": "Washing machines, fridges" },
+      "appliance_repair": { "label": "Appliance Repair",  "description": "Washing machines, fridges" },
       "transport":       { "label": "Moving & Transport","description": "Truck rental, relocation" },
       "carpentry":       { "label": "Carpentry",         "description": "Furniture, doors, wood" },
       "painting":        { "label": "Painting",          "description": "Interior & exterior" },
