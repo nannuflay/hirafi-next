@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import { notFound } from 'next/navigation'
-import { hasLocale, locales, type Locale } from './dictionaries'
+import { hasLocale, locales } from './dictionaries'
 import '../globals.css'
 
 const poppins = Poppins({

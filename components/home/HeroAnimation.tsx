@@ -66,7 +66,7 @@ export function HeroAnimation() {
             ))}
           </div>
           <p className="mt-1 text-[9px] leading-snug text-muted-foreground">
-            "Excellent work, very fast!"
+            &ldquo;Excellent work, very fast!&rdquo;
           </p>
         </div>
       </div>
