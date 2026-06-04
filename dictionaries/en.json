@@ -1,0 +1,119 @@
+{
+  "nav": {
+    "howItWorks": "How it works",
+    "services": "Services",
+    "forPros": "For professionals",
+    "signIn": "Sign in",
+    "getStarted": "Get started"
+  },
+  "hero": {
+    "badge": "Available across Morocco",
+    "titleStart": "Find trusted",
+    "titleHighlight": "professionals",
+    "titleEnd": ", book in minutes.",
+    "subtitle": "Connect with verified craftsmen for plumbing, electricity, moving, and more — directly in your city, no middlemen.",
+    "findPro": "Find a professional",
+    "offerServices": "Offer your services",
+    "verifiedPros": "Verified pros",
+    "ratedByClients": "Rated by real clients",
+    "localToCity": "Local to your city",
+    "stats": {
+      "professionals": "Professionals",
+      "cities": "Cities",
+      "jobsDone": "Jobs done"
+    }
+  },
+  "categories": {
+    "title": "Browse by service",
+    "subtitle": "Pick a category to find available professionals near you.",
+    "items": {
+      "plumbing":        { "label": "Plumbing",          "description": "Leaks, pipes, fixtures" },
+      "electricity":     { "label": "Electricity",       "description": "Wiring, panels, outlets" },
+      "applianceRepair": { "label": "Appliance Repair",  "description": "Washing machines, fridges" },
+      "transport":       { "label": "Moving & Transport","description": "Truck rental, relocation" },
+      "carpentry":       { "label": "Carpentry",         "description": "Furniture, doors, wood" },
+      "painting":        { "label": "Painting",          "description": "Interior & exterior" },
+      "cleaning":        { "label": "Cleaning",          "description": "Home & office cleaning" },
+      "other":           { "label": "Other Services",    "description": "More skilled workers" }
+    }
+  },
+  "howItWorks": {
+    "title": "Book a pro in 3 steps",
+    "subtitle": "No phone calls, no guessing — just a few clicks.",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Browse & filter",
+        "description": "Search by service category and city. Browse professional profiles with ratings, rates, and availability."
+      },
+      {
+        "number": "02",
+        "title": "Pick a time slot",
+        "description": "Each professional publishes their open dates. Pick the slot that works for you and confirm the booking instantly."
+      },
+      {
+        "number": "03",
+        "title": "Job done",
+        "description": "The professional shows up at the agreed time. Rate them after the job to help the community."
+      }
+    ]
+  },
+  "vendorCta": {
+    "tag": "For professionals",
+    "title": "Are you a skilled craftsman?",
+    "subtitle": "Join hundreds of professionals already growing their client base on Hirafi. Set your own rates, publish your available dates, and let clients book you directly.",
+    "benefits": [
+      "Free profile — list your services in minutes",
+      "You control your schedule and availability",
+      "Clients come to you — no cold outreach needed",
+      "Get rated and build your reputation"
+    ],
+    "cta": "Create your free profile"
+  },
+  "footer": {
+    "tagline": "Morocco's local services marketplace",
+    "links": {
+      "howItWorks": "How it works",
+      "services": "Services",
+      "forPros": "For professionals",
+      "signIn": "Sign in",
+      "signUp": "Sign up"
+    },
+    "copyright": "All rights reserved."
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "description": "Sign in to your Hirafi account",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
+    },
+    "signup": {
+      "title": "Create an account",
+      "description": "Join Hirafi — find or offer local services",
+      "fullName": "Full name",
+      "fullNamePlaceholder": "Mohammed Alami",
+      "email": "Email",
+      "password": "Password",
+      "roleLabel": "I am a…",
+      "roleClient": "Client",
+      "roleClientDesc": "Looking for services",
+      "roleVendor": "Hirafi",
+      "roleVendorDesc": "Offering services",
+      "submit": "Create account",
+      "submitting": "Creating account…",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "confirmationTitle": "Check your inbox",
+      "confirmationText": "We sent a confirmation link to",
+      "confirmationAction": "Click the link to activate your account.",
+      "spamHint": "Didn't receive it? Check your spam folder or wait a few minutes.",
+      "wrongEmail": "Wrong email?",
+      "signUpAgain": "Sign up again"
+    }
+  }
+}

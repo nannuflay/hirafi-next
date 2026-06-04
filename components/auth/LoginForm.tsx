@@ -5,16 +5,19 @@ import { signIn } from '@/actions/auth'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
+import type { Dictionary } from '@/app/[lang]/dictionaries'
+
+type LoginDict = Dictionary['auth']['login']
 
 const initialState = { error: '' }
 
-export function LoginForm() {
+export function LoginForm({ dict }: { dict: LoginDict }) {
   const [state, formAction, pending] = useActionState(signIn, initialState)
 
   return (
     <form action={formAction} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">{dict.email}</Label>
         <Input
           id="email"
           name="email"
@@ -26,7 +29,7 @@ export function LoginForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">{dict.password}</Label>
         <Input
           id="password"
           name="password"
@@ -44,7 +47,7 @@ export function LoginForm() {
       )}
 
       <Button type="submit" className="w-full" disabled={pending}>
-        {pending ? 'Signing in…' : 'Sign in'}
+        {pending ? dict.submitting : dict.submit}
       </Button>
     </form>
   )

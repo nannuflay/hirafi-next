@@ -1,0 +1,119 @@
+{
+  "nav": {
+    "howItWorks": "Comment ça marche",
+    "services": "Services",
+    "forPros": "Pour les pros",
+    "signIn": "Se connecter",
+    "getStarted": "Commencer"
+  },
+  "hero": {
+    "badge": "Disponible dans les grandes villes du Maroc",
+    "titleStart": "Trouvez des",
+    "titleHighlight": "professionnels",
+    "titleEnd": " de confiance, réservez en minutes.",
+    "subtitle": "Connectez-vous avec des artisans vérifiés pour la plomberie, l'électricité, le déménagement et plus — directement dans votre ville, sans intermédiaires.",
+    "findPro": "Trouver un professionnel",
+    "offerServices": "Proposer vos services",
+    "verifiedPros": "Pros vérifiés",
+    "ratedByClients": "Notés par de vrais clients",
+    "localToCity": "Locaux dans votre ville",
+    "stats": {
+      "professionals": "Professionnels",
+      "cities": "Villes",
+      "jobsDone": "Missions réalisées"
+    }
+  },
+  "categories": {
+    "title": "Parcourir par service",
+    "subtitle": "Choisissez une catégorie pour trouver des professionnels disponibles près de chez vous.",
+    "items": {
+      "plumbing":        { "label": "Plomberie",          "description": "Fuites, tuyaux, robinetterie" },
+      "electricity":     { "label": "Électricité",        "description": "Câblage, tableaux, prises" },
+      "applianceRepair": { "label": "Réparation appareils","description": "Machines à laver, frigos" },
+      "transport":       { "label": "Déménagement",       "description": "Location camion, relocation" },
+      "carpentry":       { "label": "Menuiserie",         "description": "Meubles, portes, bois" },
+      "painting":        { "label": "Peinture",           "description": "Intérieur & extérieur" },
+      "cleaning":        { "label": "Nettoyage",          "description": "Maison & bureau" },
+      "other":           { "label": "Autres services",    "description": "Plus d'artisans qualifiés" }
+    }
+  },
+  "howItWorks": {
+    "title": "Réservez un pro en 3 étapes",
+    "subtitle": "Pas d'appels, pas de doutes — quelques clics suffisent.",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Parcourir et filtrer",
+        "description": "Recherchez par catégorie et ville. Consultez les profils avec notes, tarifs et disponibilités."
+      },
+      {
+        "number": "02",
+        "title": "Choisir un créneau",
+        "description": "Chaque professionnel publie ses dates disponibles. Choisissez le créneau qui vous convient et confirmez immédiatement."
+      },
+      {
+        "number": "03",
+        "title": "Mission accomplie",
+        "description": "Le professionnel se présente à l'heure convenue. Notez-le après la prestation pour aider la communauté."
+      }
+    ]
+  },
+  "vendorCta": {
+    "tag": "Pour les professionnels",
+    "title": "Vous êtes un artisan qualifié ?",
+    "subtitle": "Rejoignez des centaines de professionnels qui développent déjà leur clientèle sur Hirafi. Fixez vos propres tarifs, publiez vos disponibilités et laissez les clients vous réserver directement.",
+    "benefits": [
+      "Profil gratuit — listez vos services en quelques minutes",
+      "Vous contrôlez votre agenda et vos disponibilités",
+      "Les clients viennent à vous — sans démarchage",
+      "Obtenez des avis et construisez votre réputation"
+    ],
+    "cta": "Créer votre profil gratuit"
+  },
+  "footer": {
+    "tagline": "La marketplace de services locaux au Maroc",
+    "links": {
+      "howItWorks": "Comment ça marche",
+      "services": "Services",
+      "forPros": "Pour les pros",
+      "signIn": "Se connecter",
+      "signUp": "S'inscrire"
+    },
+    "copyright": "Tous droits réservés."
+  },
+  "auth": {
+    "login": {
+      "title": "Bon retour",
+      "description": "Connectez-vous à votre compte Hirafi",
+      "email": "Email",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "submitting": "Connexion…",
+      "noAccount": "Vous n'avez pas de compte ?",
+      "signUp": "S'inscrire"
+    },
+    "signup": {
+      "title": "Créer un compte",
+      "description": "Rejoignez Hirafi — trouvez ou proposez des services locaux",
+      "fullName": "Nom complet",
+      "fullNamePlaceholder": "Mohammed Alami",
+      "email": "Email",
+      "password": "Mot de passe",
+      "roleLabel": "Je suis…",
+      "roleClient": "Client",
+      "roleClientDesc": "Je cherche des services",
+      "roleVendor": "Hirafi",
+      "roleVendorDesc": "Je propose des services",
+      "submit": "Créer un compte",
+      "submitting": "Création en cours…",
+      "hasAccount": "Vous avez déjà un compte ?",
+      "signIn": "Se connecter",
+      "confirmationTitle": "Vérifiez votre boîte mail",
+      "confirmationText": "Nous avons envoyé un lien de confirmation à",
+      "confirmationAction": "Cliquez sur le lien pour activer votre compte.",
+      "spamHint": "Vous ne l'avez pas reçu ? Vérifiez vos spams ou attendez quelques minutes.",
+      "wrongEmail": "Mauvais email ?",
+      "signUpAgain": "S'inscrire à nouveau"
+    }
+  }
+}

@@ -14,10 +14,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import type { Dictionary } from '@/app/[lang]/dictionaries'
+
+type SignupDict = Dictionary['auth']['signup']
 
 const initialState = { error: '', success: '', email: '' }
 
-export function SignupForm() {
+export function SignupForm({ lang, dict }: { lang: string; dict: SignupDict }) {
   const [state, formAction, pending] = useActionState(signUp, initialState)
 
   if (state.success) {
@@ -42,28 +45,28 @@ export function SignupForm() {
             </div>
 
             <div className="space-y-2">
-              <h2 className="text-xl font-semibold tracking-tight">Check your inbox</h2>
+              <h2 className="text-xl font-semibold tracking-tight">{dict.confirmationTitle}</h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                We sent a confirmation link to{' '}
+                {dict.confirmationText}{' '}
                 <span className="font-semibold text-foreground">{state.email}</span>.
                 <br />
-                Click the link to activate your account.
+                {dict.confirmationAction}
               </p>
             </div>
 
             <div className="w-full rounded-xl border border-border bg-muted/40 px-4 py-3 text-xs text-muted-foreground">
-              Didn&apos;t receive it? Check your spam folder or wait a few minutes.
+              {dict.spamHint}
             </div>
           </div>
         </CardContent>
 
         <CardFooter className="justify-center text-sm text-muted-foreground pb-8">
-          Wrong email?&nbsp;
+          {dict.wrongEmail}&nbsp;
           <button
             onClick={() => window.location.reload()}
             className="text-foreground font-medium underline underline-offset-4"
           >
-            Sign up again
+            {dict.signUpAgain}
           </button>
         </CardFooter>
       </Card>
@@ -73,25 +76,25 @@ export function SignupForm() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle className="text-2xl">Create an account</CardTitle>
-        <CardDescription>Join Hirafi — find or offer local services</CardDescription>
+        <CardTitle className="text-2xl">{dict.title}</CardTitle>
+        <CardDescription>{dict.description}</CardDescription>
       </CardHeader>
       <CardContent>
         <form action={formAction} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="full_name">Full name</Label>
+            <Label htmlFor="full_name">{dict.fullName}</Label>
             <Input
               id="full_name"
               name="full_name"
               type="text"
-              placeholder="Mohammed Alami"
+              placeholder={dict.fullNamePlaceholder}
               required
               autoComplete="name"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{dict.email}</Label>
             <Input
               id="email"
               name="email"
@@ -103,7 +106,7 @@ export function SignupForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{dict.password}</Label>
             <Input
               id="password"
               name="password"
@@ -116,10 +119,10 @@ export function SignupForm() {
           </div>
 
           <div className="space-y-2">
-            <Label>I am a…</Label>
+            <Label>{dict.roleLabel}</Label>
             <div className="grid grid-cols-2 gap-3">
-              <RoleOption value="client" label="Client" description="Looking for services" />
-              <RoleOption value="vendor" label="Hirafi" description="Offering services" />
+              <RoleOption value="client" label={dict.roleClient} description={dict.roleClientDesc} />
+              <RoleOption value="vendor" label={dict.roleVendor} description={dict.roleVendorDesc} />
             </div>
           </div>
 
@@ -130,14 +133,17 @@ export function SignupForm() {
           )}
 
           <Button type="submit" className="w-full" disabled={pending}>
-            {pending ? 'Creating account…' : 'Create account'}
+            {pending ? dict.submitting : dict.submit}
           </Button>
         </form>
       </CardContent>
       <CardFooter className="justify-center text-sm text-muted-foreground">
-        Already have an account?&nbsp;
-        <Link href="/login" className="text-foreground font-medium underline underline-offset-4">
-          Sign in
+        {dict.hasAccount}&nbsp;
+        <Link
+          href={`/${lang}/login`}
+          className="text-foreground font-medium underline underline-offset-4"
+        >
+          {dict.signIn}
         </Link>
       </CardFooter>
     </Card>
