@@ -37,7 +37,7 @@ export async function middleware(request: NextRequest) {
 
   // Redirect authenticated users away from auth pages
   if ((pathname === '/login' || pathname === '/signup') && user) {
-    return NextResponse.redirect(new URL('/dashboard/client', request.url))
+    return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
   return supabaseResponse

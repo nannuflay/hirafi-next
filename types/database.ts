@@ -39,6 +39,7 @@ export interface Database {
           city?: string | null
           phone?: string | null
         }
+        Relationships: []
       }
       vendor_services: {
         Row: {
@@ -62,6 +63,15 @@ export interface Database {
           bio?: string | null
           rate?: number | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'vendor_services_vendor_id_fkey'
+            columns: ['vendor_id']
+            isOneToOne: true
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          }
+        ]
       }
       availabilities: {
         Row: {
@@ -81,6 +91,15 @@ export interface Database {
         Update: {
           is_booked?: boolean
         }
+        Relationships: [
+          {
+            foreignKeyName: 'availabilities_vendor_id_fkey'
+            columns: ['vendor_id']
+            isOneToOne: false
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          }
+        ]
       }
       bookings: {
         Row: {
@@ -104,6 +123,29 @@ export interface Database {
         Update: {
           status?: BookingStatus
         }
+        Relationships: [
+          {
+            foreignKeyName: 'bookings_client_id_fkey'
+            columns: ['client_id']
+            isOneToOne: false
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bookings_vendor_id_fkey'
+            columns: ['vendor_id']
+            isOneToOne: false
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'bookings_availability_id_fkey'
+            columns: ['availability_id']
+            isOneToOne: false
+            referencedRelation: 'availabilities'
+            referencedColumns: ['id']
+          }
+        ]
       }
       favorites: {
         Row: {
@@ -119,8 +161,26 @@ export interface Database {
           created_at?: string
         }
         Update: Record<string, never>
+        Relationships: [
+          {
+            foreignKeyName: 'favorites_client_id_fkey'
+            columns: ['client_id']
+            isOneToOne: false
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'favorites_vendor_id_fkey'
+            columns: ['vendor_id']
+            isOneToOne: false
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          }
+        ]
       }
     }
+    Views: Record<string, never>
+    Functions: Record<string, never>
   }
 }
 
