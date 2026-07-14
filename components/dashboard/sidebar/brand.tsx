@@ -9,9 +9,9 @@ import {
 } from '@/components/ui/tooltip'
 
 export function Brand({
-  collapsed, onToggle,
+  collapsed, onToggle, showToggle = true,
 }: {
-  collapsed: boolean; onToggle: () => void
+  collapsed: boolean; onToggle: () => void; showToggle?: boolean
 }) {
   return (
     <div className={cn(
@@ -29,7 +29,7 @@ export function Brand({
           Hirafi
         </span>
       )}
-      {collapsed ? (
+      {showToggle && (collapsed ? (
         <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-200 group-hover/brand:opacity-100">
           <Tooltip>
             <TooltipTrigger
@@ -67,7 +67,7 @@ export function Brand({
             Close sidebar
           </TooltipContent>
         </Tooltip>
-      )}
+      ))}
     </div>
   )
 }

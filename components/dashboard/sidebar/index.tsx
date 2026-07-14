@@ -70,6 +70,7 @@ export function DashboardSidebar({
               t={t}
               collapsed={false}
               onToggle={() => {}}
+              showToggle={false}
             />
           </SheetContent>
         </Sheet>
@@ -80,9 +81,6 @@ export function DashboardSidebar({
           <span className="font-bold tracking-tight">Hirafi</span>
         </div>
       </div>
-
-      {/* Spacer for mobile top bar */}
-      <div className="h-14 lg:hidden" />
     </>
   )
 }

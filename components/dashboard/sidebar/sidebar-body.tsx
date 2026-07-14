@@ -37,6 +37,7 @@ export function SidebarBody({
   t,
   collapsed,
   onToggle,
+  showToggle = true,
 }: {
   lang: string;
   role: UserRole;
@@ -45,6 +46,7 @@ export function SidebarBody({
   t: Dictionary["dashboard"]["sidebar"];
   collapsed: boolean;
   onToggle: () => void;
+  showToggle?: boolean;
 }) {
   const pathname = usePathname();
   const items = role === "vendor" ? VENDOR_NAV : CLIENT_NAV;
@@ -52,13 +54,9 @@ export function SidebarBody({
 
   return (
     <TooltipProvider>
-      <div
-        className={cn(
-          "flex h-full flex-col bg-sidebar transition-[width] duration-300 ease-in-out",
-          collapsed ? "w-[68px]" : "w-[260px]",
-        )}
-      >
-        <Brand collapsed={collapsed} onToggle={onToggle} />
+      <div className="flex h-full w-full flex-col bg-sidebar">
+
+        <Brand collapsed={collapsed} onToggle={onToggle} showToggle={showToggle} />
 
         <nav className="flex-1 space-y-1 overflow-hidden px-3 py-4">
           {items.map(({ key, icon, hrefSuffix }) => {

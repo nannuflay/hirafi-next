@@ -34,7 +34,7 @@ export default async function DashboardLayout({
         avatarUrl={profile?.avatar_url ?? null}
         dict={dict}
       />
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1 overflow-auto pt-14 lg:pt-0">
         <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
           {children}
         </div>
