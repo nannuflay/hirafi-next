@@ -62,41 +62,35 @@ export default async function ClientDashboardPage({
       {/* Stats */}
       <div className="grid gap-4 sm:grid-cols-3">
         <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">{t.overview.totalBookings}</p>
-                <p className="mt-1 text-3xl font-bold tracking-tight">{allBookings.length}</p>
-              </div>
-              <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
-                <CalendarDays className="size-5 text-primary" />
-              </div>
+          <CardContent className="flex items-center gap-4">
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover/card:bg-primary/15">
+              <CalendarDays className="size-5" />
+            </div>
+            <div className="min-w-0">
+              <p className="truncate text-xs font-medium text-muted-foreground">{t.overview.totalBookings}</p>
+              <p className="text-2xl font-bold tracking-tight">{allBookings.length}</p>
             </div>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">{t.overview.pendingBookings}</p>
-                <p className="mt-1 text-3xl font-bold tracking-tight">{pendingCount}</p>
-              </div>
-              <div className="flex size-10 items-center justify-center rounded-xl bg-yellow-500/10">
-                <Clock className="size-5 text-yellow-600" />
-              </div>
+          <CardContent className="flex items-center gap-4">
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 transition-colors group-hover/card:bg-amber-500/15">
+              <Clock className="size-5" />
+            </div>
+            <div className="min-w-0">
+              <p className="truncate text-xs font-medium text-muted-foreground">{t.overview.pendingBookings}</p>
+              <p className="text-2xl font-bold tracking-tight">{pendingCount}</p>
             </div>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">{t.overview.completedBookings}</p>
-                <p className="mt-1 text-3xl font-bold tracking-tight">{completedCount}</p>
-              </div>
-              <div className="flex size-10 items-center justify-center rounded-xl bg-green-500/10">
-                <CheckCircle2 className="size-5 text-green-600" />
-              </div>
+          <CardContent className="flex items-center gap-4">
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 transition-colors group-hover/card:bg-emerald-500/15">
+              <CheckCircle2 className="size-5" />
+            </div>
+            <div className="min-w-0">
+              <p className="truncate text-xs font-medium text-muted-foreground">{t.overview.completedBookings}</p>
+              <p className="text-2xl font-bold tracking-tight">{completedCount}</p>
             </div>
           </CardContent>
         </Card>
