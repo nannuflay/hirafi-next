@@ -140,5 +140,72 @@
       "wrongEmail": "البريد خاطئ؟",
       "signUpAgain": "سجّل مجدداً"
     }
+  },
+  "dashboard": {
+    "sidebar": {
+      "overview": "الرئيسية",
+      "bookings": "الحجوزات",
+      "availability": "التوفر",
+      "profile": "الملف الشخصي",
+      "settings": "الإعدادات",
+      "signOut": "تسجيل الخروج",
+      "home": "الصفحة الرئيسية"
+    },
+    "overview": {
+      "title": "لوحة التحكم",
+      "welcome": "أهلاً بعودتك",
+      "totalBookings": "إجمالي الحجوزات",
+      "pendingBookings": "قيد الانتظار",
+      "completedBookings": "مكتملة",
+      "monthlyRevenue": "الإيراد الشهري",
+      "recentBookings": "الحجوزات الأخيرة",
+      "noBookings": "لا توجد حجوزات بعد",
+      "noBookingsHint": "عندما يحجز عملاؤك سيظهر هنا.",
+      "viewAll": "عرض الكل",
+      "earningsLabel": "درهم"
+    },
+    "bookings": {
+      "title": "حجوزاتي",
+      "empty": "لم يتم العثور على حجوزات",
+      "emptyHint": "ستظهر حجوزاتك هنا بمجرد أن يبدأ العملاء بالحجز.",
+      "client": "العميل",
+      "date": "التاريخ",
+      "status": "الحالة",
+      "actions": "الإجراءات",
+      "pending": "قيد الانتظار",
+      "confirmed": "مؤكدة",
+      "completed": "مكتملة",
+      "cancelled": "ملغاة",
+      "accept": "قبول",
+      "decline": "رفض",
+      "complete": "إتمام",
+      "filterAll": "الكل",
+      "filterPending": "قيد الانتظار",
+      "filterConfirmed": "مؤكدة",
+      "filterCompleted": "مكتملة"
+    },
+    "availability": {
+      "title": "التوفر",
+      "subtitle": "إدارة تواريخ توفرك للحجوزات.",
+      "empty": "لم يتم تعيين تواريخ",
+      "emptyHint": "أضف تواريخ توفرك حتى يتمكن العملاء من حجزك.",
+      "addDate": "إضافة تاريخ",
+      "remove": "إزالة",
+      "available": "متاح",
+      "booked": "محجوز"
+    },
+    "profile": {
+      "title": "ملفي الشخصي",
+      "editProfile": "تعديل الملف",
+      "save": "حفظ التغييرات",
+      "saved": "تم الحفظ!",
+      "fullName": "الاسم الكامل",
+      "phone": "الهاتف",
+      "city": "المدينة",
+      "bio": "عنك",
+      "rate": "السعر بالساعة (درهم)",
+      "category": "الفئة",
+      "memberSince": "عضو منذ"
+    }
   }
 }

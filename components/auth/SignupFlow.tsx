@@ -2,6 +2,7 @@
 
 import { useTransition, useState, useRef } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import {
   User, Phone, Mail, Lock, ArrowRight, ArrowLeft,
   Wrench, Zap, Settings2, Truck, Hammer, Paintbrush,
@@ -12,13 +13,17 @@ import { signUpFull } from '@/actions/auth'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { buttonVariants } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
+import {
+  Card, CardContent, CardHeader, CardTitle, CardDescription,
+} from '@/components/ui/card'
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import type { Dictionary } from '@/app/[lang]/dictionaries'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
-type Step     = 'basics' | 'role' | 'category' | 'profile'
-type RoleVal  = 'client' | 'vendor' | ''
+type Step = 'basics' | 'role' | 'category' | 'profile'
+type RoleVal = 'client' | 'vendor' | ''
 
 interface FlowData {
   fullName: string; phone: string; email: string; password: string
@@ -40,50 +45,15 @@ const VENDOR_STEPS: Step[] = ['basics', 'role', 'category', 'profile']
 // ── Category data ─────────────────────────────────────────────────────────────
 
 const CATEGORIES = [
-  { key: 'plumbing',        icon: Wrench,     color: 'bg-blue-100 text-blue-600' },
-  { key: 'electricity',     icon: Zap,        color: 'bg-yellow-100 text-yellow-600' },
-  { key: 'appliance_repair', icon: Settings2,  color: 'bg-purple-100 text-purple-600' },
-  { key: 'transport',       icon: Truck,      color: 'bg-green-100 text-green-600' },
-  { key: 'carpentry',       icon: Hammer,     color: 'bg-orange-100 text-orange-600' },
-  { key: 'painting',        icon: Paintbrush, color: 'bg-pink-100 text-pink-600' },
-  { key: 'cleaning',        icon: Sparkles,   color: 'bg-teal-100 text-teal-600' },
-  { key: 'other',           icon: LayoutGrid, color: 'bg-gray-100 text-gray-500' },
+  { key: 'plumbing', icon: Wrench, color: 'bg-blue-100 text-blue-600' },
+  { key: 'electricity', icon: Zap, color: 'bg-yellow-100 text-yellow-600' },
+  { key: 'appliance_repair', icon: Settings2, color: 'bg-purple-100 text-purple-600' },
+  { key: 'transport', icon: Truck, color: 'bg-green-100 text-green-600' },
+  { key: 'carpentry', icon: Hammer, color: 'bg-orange-100 text-orange-600' },
+  { key: 'painting', icon: Paintbrush, color: 'bg-pink-100 text-pink-600' },
+  { key: 'cleaning', icon: Sparkles, color: 'bg-teal-100 text-teal-600' },
+  { key: 'other', icon: LayoutGrid, color: 'bg-gray-100 text-gray-500' },
 ] as const
-
-// ── Progress indicator ───────────────────────────────────────────────────────
-
-function Progress({
-  steps, current, titles,
-}: {
-  steps: Step[]; current: number; titles: string[]
-}) {
-  return (
-    <div className="mb-6">
-      <div className="flex items-center gap-0">
-        {steps.map((_, i) => (
-          <div key={i} className="flex flex-1 items-center">
-            <div
-              className={cn(
-                'flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold transition-all',
-                i < current  ? 'bg-primary text-primary-foreground' :
-                i === current ? 'bg-primary text-primary-foreground ring-4 ring-primary/20' :
-                                'bg-muted text-muted-foreground'
-              )}
-            >
-              {i < current ? <Check className="size-3.5" /> : i + 1}
-            </div>
-            {i < steps.length - 1 && (
-              <div className={cn('h-px flex-1 transition-all', i < current ? 'bg-primary' : 'bg-border')} />
-            )}
-          </div>
-        ))}
-      </div>
-      <p className="mt-2 text-xs font-medium text-primary">
-        {titles[current]}
-      </p>
-    </div>
-  )
-}
 
 // ── Step 1: Basic info ────────────────────────────────────────────────────────
 
@@ -264,18 +234,20 @@ function StepProfile({
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          className="group relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-2 border-dashed border-border bg-muted transition-colors hover:bg-muted/70"
+          className="group relative"
         >
-          {data.avatarPreview ? (
-            <>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={data.avatarPreview} alt="" className="h-full w-full object-cover" />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 transition-opacity group-hover:opacity-100">
-                <Camera className="size-6 text-white" />
-              </div>
-            </>
-          ) : (
-            <Camera className="size-8 text-muted-foreground" />
+          <Avatar className="size-24 border-2 border-dashed border-border">
+            {data.avatarPreview ? (
+              <AvatarImage src={data.avatarPreview} alt="" className="object-cover" />
+            ) : null}
+            <AvatarFallback className="bg-muted">
+              <Camera className="size-8 text-muted-foreground" />
+            </AvatarFallback>
+          </Avatar>
+          {data.avatarPreview && (
+            <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/30 opacity-0 transition-opacity group-hover:opacity-100">
+              <Camera className="size-6 text-white" />
+            </div>
           )}
         </button>
         <input ref={inputRef} type="file" accept="image/*" className="sr-only" onChange={handleAvatar} />
@@ -299,13 +271,12 @@ function StepProfile({
       {/* Bio */}
       <div className="space-y-1.5">
         <Label htmlFor="bio">{dict.bio}</Label>
-        <textarea
+        <Textarea
           id="bio"
           value={data.bio}
           onChange={set('bio')}
           placeholder={dict.bioPlaceholder}
           rows={3}
-          className="w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:border-ring resize-none"
         />
       </div>
 
@@ -329,8 +300,8 @@ function SuccessScreen({
   email: string; dict: Dictionary['auth']['signup']
 }) {
   return (
-    <div className="w-full max-w-md">
-      <div className="rounded-2xl border border-border bg-card px-8 py-10 text-center shadow-sm">
+    <Card className="w-full max-w-md">
+      <CardContent className="pt-10 pb-8 px-8 text-center">
         <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
           <Mail className="size-8 text-primary" />
         </div>
@@ -344,17 +315,19 @@ function SuccessScreen({
         <div className="rounded-xl border border-border bg-muted/40 px-4 py-3 text-xs text-muted-foreground">
           {dict.spamHint}
         </div>
-      </div>
-      <div className="mt-4 text-center text-sm text-muted-foreground">
+      </CardContent>
+      <div className="px-8 pb-8 text-center text-sm text-muted-foreground">
         {dict.wrongEmail}&nbsp;
-        <button
+        <Button
+          variant="link"
+          size="sm"
+          className="h-auto p-0 font-medium text-foreground underline underline-offset-4"
           onClick={() => window.location.reload()}
-          className="font-medium text-foreground underline underline-offset-4"
         >
           {dict.signUpAgain}
-        </button>
+        </Button>
       </div>
-    </div>
+    </Card>
   )
 }
 
@@ -369,18 +342,18 @@ export function SignupFlow({
 }) {
   const t = dict.auth.signup
   const catDict = dict.categories.items
+  const router = useRouter()
 
-  const [step, setStep]     = useState<Step>('basics')
-  const [data, setData]     = useState<FlowData>(INITIAL)
-  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [step, setStep]       = useState<Step>('basics')
+  const [data, setData]       = useState<FlowData>(INITIAL)
+  const [errors, setErrors]   = useState<Record<string, string>>({})
   const [serverError, setServerError] = useState('')
   const [success, setSuccess] = useState(false)
   const [isPending, startTransition] = useTransition()
 
-  const steps       = data.role === 'vendor' ? VENDOR_STEPS : CLIENT_STEPS
-  const stepIndex   = steps.indexOf(step)
-  const stepTitles  = [t.step1Title, t.step2Title, t.step3Title, t.step4Title]
-  const isLastStep  = step === 'profile' || (step === 'role' && data.role === 'client')
+  const steps      = data.role === 'vendor' ? VENDOR_STEPS : CLIENT_STEPS
+  const stepIndex  = steps.indexOf(step)
+  const isLastStep = step === 'profile' || (step === 'role' && data.role === 'client')
 
   // ── Validation ──────────────────────────────────────────────────────────────
 
@@ -407,11 +380,8 @@ export function SignupFlow({
   // ── Handlers ────────────────────────────────────────────────────────────────
 
   function handleRoleSelect(role: 'client' | 'vendor') {
-    const next = data.role !== role ? role : data.role
-    setData({ ...data, role: next })
-
+    setData({ ...data, role })
     if (role === 'client') {
-      // Clients are done — submit immediately
       handleSubmit({ ...data, role: 'client' })
     } else {
       setStep('category')
@@ -448,6 +418,8 @@ export function SignupFlow({
       const result = await signUpFull({ error: '' }, fd)
       if (result.error) {
         setServerError(result.error)
+      } else if (result.redirect) {
+        router.push(result.redirect)
       } else if (result.success) {
         setSuccess(true)
       }
@@ -463,83 +435,85 @@ export function SignupFlow({
   return (
     <div className="w-full max-w-md">
       {/* Step card */}
-      <div
+      <Card
         key={step}
-        className="rounded-2xl border border-border bg-card p-6 shadow-sm"
         style={{ animation: 'stepEnter 0.25s ease-out both' }}
       >
-        {/* Step header */}
-        {step !== 'role' && (
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-foreground">
-              {step === 'basics'    ? t.step1Title    :
-               step === 'category' ? t.categoryQuestion :
-                                     t.profileQuestion}
-            </h2>
-            {step === 'profile' && (
-              <p className="mt-0.5 text-sm text-muted-foreground">{t.profileSubtitle}</p>
-            )}
-          </div>
-        )}
-        {step === 'role' && (
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold text-foreground">{t.step2Title}</h2>
-          </div>
-        )}
+        <CardContent className="p-6">
+          {/* Step header */}
+          {step !== 'role' && (
+            <CardHeader className="p-0 pb-5">
+              <CardTitle className="text-lg">
+                {step === 'basics'    ? t.step1Title    :
+                 step === 'category' ? t.categoryQuestion :
+                                       t.profileQuestion}
+              </CardTitle>
+              {step === 'profile' && (
+                <CardDescription className="mt-0.5">{t.profileSubtitle}</CardDescription>
+              )}
+            </CardHeader>
+          )}
+          {step === 'role' && (
+            <CardHeader className="p-0 pb-5">
+              <CardTitle className="text-lg">{t.step2Title}</CardTitle>
+            </CardHeader>
+          )}
 
-        {/* Step content */}
-        {step === 'basics' && (
-          <StepBasics data={data} setData={setData} dict={t} errors={errors} />
-        )}
-        {step === 'role' && (
-          <StepRole dict={t} onSelect={handleRoleSelect} />
-        )}
-        {step === 'category' && (
-          <StepCategory data={data} setData={setData} dict={t} catDict={catDict} errors={errors} />
-        )}
-        {step === 'profile' && (
-          <StepProfile data={data} setData={setData} dict={t} errors={errors} />
-        )}
+          {/* Step content */}
+          {step === 'basics' && (
+            <StepBasics data={data} setData={setData} dict={t} errors={errors} />
+          )}
+          {step === 'role' && (
+            <StepRole dict={t} onSelect={handleRoleSelect} />
+          )}
+          {step === 'category' && (
+            <StepCategory data={data} setData={setData} dict={t} catDict={catDict} errors={errors} />
+          )}
+          {step === 'profile' && (
+            <StepProfile data={data} setData={setData} dict={t} errors={errors} />
+          )}
 
-        {/* Server error */}
-        {serverError && (
-          <p className="mt-3 text-sm text-destructive" aria-live="polite">{serverError}</p>
-        )}
+          {/* Server error */}
+          {serverError && (
+            <p className="mt-3 text-sm text-destructive" aria-live="polite">{serverError}</p>
+          )}
 
-        {/* Navigation — hidden on role step (card click advances) */}
-        {step !== 'role' && (
-          <div className="mt-6 flex items-center justify-between gap-3">
-            {stepIndex > 0 ? (
-              <button
-                type="button"
-                onClick={handleBack}
-                className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-1.5')}
-              >
-                <ArrowLeft className="size-3.5 rtl:rotate-180" />
-                {t.back}
-              </button>
-            ) : (
-              <span />
-            )}
+          {/* Navigation — hidden on role step */}
+          {step !== 'role' && (
+            <div className="mt-6 flex items-center justify-between gap-3">
+              {stepIndex > 0 ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleBack}
+                  className="gap-1.5"
+                >
+                  <ArrowLeft className="size-3.5 rtl:rotate-180" />
+                  {t.back}
+                </Button>
+              ) : (
+                <span />
+              )}
 
-            {isLastStep ? (
-              <Button
-                size="sm"
-                disabled={isPending}
-                onClick={() => { if (validate()) handleSubmit() }}
-                className="gap-1.5"
-              >
-                {isPending ? t.submitting : t.submit}
-              </Button>
-            ) : (
-              <Button size="sm" onClick={handleContinue} className="gap-1.5">
-                {t.continue}
-                <ArrowRight className="size-3.5 rtl:rotate-180" />
-              </Button>
-            )}
-          </div>
-        )}
-      </div>
+              {isLastStep ? (
+                <Button
+                  size="sm"
+                  disabled={isPending}
+                  onClick={() => { if (validate()) handleSubmit() }}
+                  className="gap-1.5"
+                >
+                  {isPending ? t.submitting : t.submit}
+                </Button>
+              ) : (
+                <Button size="sm" onClick={handleContinue} className="gap-1.5">
+                  {t.continue}
+                  <ArrowRight className="size-3.5 rtl:rotate-180" />
+                </Button>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Sign-in link */}
       {step === 'basics' && (

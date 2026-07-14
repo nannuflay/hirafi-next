@@ -1,6 +1,9 @@
 'use client'
 
 import { useActionState } from 'react'
+import { useFormStatus } from 'react-dom'
+import { Mail } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { signUp } from '@/actions/auth'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -20,8 +23,22 @@ type SignupDict = Dictionary['auth']['signup']
 
 const initialState = { error: '', success: '', email: '' }
 
+function SubmitButton({ dict }: { dict: SignupDict }) {
+  const { pending } = useFormStatus()
+  return (
+    <Button type="submit" className="w-full" disabled={pending}>
+      {pending ? dict.submitting : dict.submit}
+    </Button>
+  )
+}
+
 export function SignupForm({ lang, dict }: { lang: string; dict: SignupDict }) {
-  const [state, formAction, pending] = useActionState(signUp, initialState)
+  const [state, formAction] = useActionState(signUp, initialState)
+  const router = useRouter()
+
+  if (state.redirect) {
+    router.push(state.redirect)
+  }
 
   if (state.success) {
     return (
@@ -29,19 +46,7 @@ export function SignupForm({ lang, dict }: { lang: string; dict: SignupDict }) {
         <CardContent className="pt-10 pb-8 px-8">
           <div className="flex flex-col items-center text-center gap-5">
             <div className="rounded-2xl bg-primary/10 p-5">
-              <svg
-                className="size-10 text-primary"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
-                />
-              </svg>
+              <Mail className="size-10 text-primary" />
             </div>
 
             <div className="space-y-2">
@@ -62,12 +67,14 @@ export function SignupForm({ lang, dict }: { lang: string; dict: SignupDict }) {
 
         <CardFooter className="justify-center text-sm text-muted-foreground pb-8">
           {dict.wrongEmail}&nbsp;
-          <button
+          <Button
+            variant="link"
+            size="sm"
+            className="h-auto p-0 font-medium text-foreground underline underline-offset-4"
             onClick={() => window.location.reload()}
-            className="text-foreground font-medium underline underline-offset-4"
           >
             {dict.signUpAgain}
-          </button>
+          </Button>
         </CardFooter>
       </Card>
     )
@@ -132,9 +139,7 @@ export function SignupForm({ lang, dict }: { lang: string; dict: SignupDict }) {
             </p>
           )}
 
-          <Button type="submit" className="w-full" disabled={pending}>
-            {pending ? dict.submitting : dict.submit}
-          </Button>
+          <SubmitButton dict={dict} />
         </form>
       </CardContent>
       <CardFooter className="justify-center text-sm text-muted-foreground">
@@ -160,9 +165,9 @@ function RoleOption({
   description: string
 }) {
   return (
-    <label className="flex flex-col items-center gap-1 rounded-lg border p-3 cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-colors">
+    <label className="flex flex-col items-center gap-1 rounded-lg border border-border bg-background p-3 cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-colors">
       <input type="radio" name="role" value={value} className="sr-only" required />
-      <span className="font-medium text-sm">{label}</span>
+      <span className="font-medium text-sm text-foreground">{label}</span>
       <span className="text-xs text-muted-foreground text-center">{description}</span>
     </label>
   )

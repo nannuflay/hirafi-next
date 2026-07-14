@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import type { UserRole } from '@/types/database'
 
-type AuthState = { error: string; success?: string; email?: string }
+type AuthState = { error: string; success?: string; email?: string; redirect?: string }
 
 export async function signUp(
   _prevState: AuthState,
@@ -39,9 +39,9 @@ export async function signUp(
   if (!data.user) return { error: 'Signup failed. Please try again.' }
 
   // data.session is null when Supabase requires email confirmation.
-  // Redirect immediately only when confirmation is disabled.
+  // Return redirect path for client-side navigation (avoids throwing inside transitions).
   if (data.session) {
-    redirect(role === 'vendor' ? '/dashboard/vendor' : '/dashboard/client')
+    return { error: '', redirect: role === 'vendor' ? '/dashboard/vendor' : '/dashboard/client' }
   }
 
   return {
@@ -117,7 +117,7 @@ export async function signUpFull(
   }
 
   if (data.session) {
-    redirect(`/${lang}/dashboard/${role === 'vendor' ? 'vendor' : 'client'}`)
+    return { error: '', redirect: `/${lang}/dashboard/${role === 'vendor' ? 'vendor' : 'client'}` }
   }
 
   return { error: '', success: 'confirmation_sent', email }
@@ -150,7 +150,7 @@ export async function signIn(
     .eq('id', data.user.id)
     .single()
 
-  redirect(profile?.role === 'vendor' ? '/dashboard/vendor' : '/dashboard/client')
+  return { error: '', redirect: profile?.role === 'vendor' ? '/dashboard/vendor' : '/dashboard/client' }
 }
 
 export async function signOut() {

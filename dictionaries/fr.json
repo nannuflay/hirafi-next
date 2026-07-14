@@ -140,5 +140,72 @@
       "wrongEmail": "Mauvais email ?",
       "signUpAgain": "S'inscrire à nouveau"
     }
+  },
+  "dashboard": {
+    "sidebar": {
+      "overview": "Aperçu",
+      "bookings": "Réservations",
+      "availability": "Disponibilité",
+      "profile": "Profil",
+      "settings": "Paramètres",
+      "signOut": "Déconnexion",
+      "home": "Accueil"
+    },
+    "overview": {
+      "title": "Tableau de bord",
+      "welcome": "Bon retour",
+      "totalBookings": "Total réservations",
+      "pendingBookings": "En attente",
+      "completedBookings": "Terminées",
+      "monthlyRevenue": "Revenu mensuel",
+      "recentBookings": "Réservations récentes",
+      "noBookings": "Aucune réservation",
+      "noBookingsHint": "Quand les clients vous réserveront, ils apparaîtront ici.",
+      "viewAll": "Tout voir",
+      "earningsLabel": "MAD"
+    },
+    "bookings": {
+      "title": "Mes réservations",
+      "empty": "Aucune réservation trouvée",
+      "emptyHint": "Vos réservations apparaîtront ici une fois que les clients commenceront à réserver.",
+      "client": "Client",
+      "date": "Date",
+      "status": "Statut",
+      "actions": "Actions",
+      "pending": "En attente",
+      "confirmed": "Confirmée",
+      "completed": "Terminée",
+      "cancelled": "Annulée",
+      "accept": "Accepter",
+      "decline": "Refuser",
+      "complete": "Terminer",
+      "filterAll": "Toutes",
+      "filterPending": "En attente",
+      "filterConfirmed": "Confirmées",
+      "filterCompleted": "Terminées"
+    },
+    "availability": {
+      "title": "Disponibilité",
+      "subtitle": "Gérez vos dates de disponibilité pour les réservations.",
+      "empty": "Aucune disponibilité définie",
+      "emptyHint": "Ajoutez vos dates de disponibilité pour que les clients puissent vous réserver.",
+      "addDate": "Ajouter une date",
+      "remove": "Supprimer",
+      "available": "Disponible",
+      "booked": "Réservé"
+    },
+    "profile": {
+      "title": "Mon profil",
+      "editProfile": "Modifier le profil",
+      "save": "Enregistrer",
+      "saved": "Enregistré !",
+      "fullName": "Nom complet",
+      "phone": "Téléphone",
+      "city": "Ville",
+      "bio": "À propos de vous",
+      "rate": "Tarif horaire (MAD)",
+      "category": "Catégorie",
+      "memberSince": "Membre depuis"
+    }
   }
 }

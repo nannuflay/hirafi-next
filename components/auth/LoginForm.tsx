@@ -1,6 +1,8 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useFormStatus } from 'react-dom'
 import { signIn } from '@/actions/auth'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -9,10 +11,26 @@ import type { Dictionary } from '@/app/[lang]/dictionaries'
 
 type LoginDict = Dictionary['auth']['login']
 
-const initialState = { error: '' }
+const initialState = { error: '', redirect: '' }
+
+function SubmitButton({ dict }: { dict: LoginDict }) {
+  const { pending } = useFormStatus()
+  return (
+    <Button type="submit" className="w-full" disabled={pending}>
+      {pending ? dict.submitting : dict.submit}
+    </Button>
+  )
+}
 
 export function LoginForm({ dict }: { dict: LoginDict }) {
-  const [state, formAction, pending] = useActionState(signIn, initialState)
+  const [state, formAction] = useActionState(signIn, initialState)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (state.redirect) {
+      router.push(state.redirect)
+    }
+  }, [state.redirect, router])
 
   return (
     <form action={formAction} className="space-y-4">
@@ -46,9 +64,7 @@ export function LoginForm({ dict }: { dict: LoginDict }) {
         </p>
       )}
 
-      <Button type="submit" className="w-full" disabled={pending}>
-        {pending ? dict.submitting : dict.submit}
-      </Button>
+      <SubmitButton dict={dict} />
     </form>
   )
 }

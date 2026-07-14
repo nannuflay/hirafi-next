@@ -140,5 +140,72 @@
       "wrongEmail": "Wrong email?",
       "signUpAgain": "Sign up again"
     }
+  },
+  "dashboard": {
+    "sidebar": {
+      "overview": "Overview",
+      "bookings": "Bookings",
+      "availability": "Availability",
+      "profile": "Profile",
+      "settings": "Settings",
+      "signOut": "Sign out",
+      "home": "Home"
+    },
+    "overview": {
+      "title": "Dashboard",
+      "welcome": "Welcome back",
+      "totalBookings": "Total Bookings",
+      "pendingBookings": "Pending",
+      "completedBookings": "Completed",
+      "monthlyRevenue": "Monthly Revenue",
+      "recentBookings": "Recent Bookings",
+      "noBookings": "No bookings yet",
+      "noBookingsHint": "When clients book you, they'll appear here.",
+      "viewAll": "View all",
+      "earningsLabel": "MAD"
+    },
+    "bookings": {
+      "title": "My Bookings",
+      "empty": "No bookings found",
+      "emptyHint": "Your bookings will appear here once clients start scheduling.",
+      "client": "Client",
+      "date": "Date",
+      "status": "Status",
+      "actions": "Actions",
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "accept": "Accept",
+      "decline": "Decline",
+      "complete": "Mark done",
+      "filterAll": "All",
+      "filterPending": "Pending",
+      "filterConfirmed": "Confirmed",
+      "filterCompleted": "Completed"
+    },
+    "availability": {
+      "title": "Availability",
+      "subtitle": "Manage the dates you're available for bookings.",
+      "empty": "No availability set",
+      "emptyHint": "Add dates when you're available so clients can book you.",
+      "addDate": "Add date",
+      "remove": "Remove",
+      "available": "Available",
+      "booked": "Booked"
+    },
+    "profile": {
+      "title": "My Profile",
+      "editProfile": "Edit profile",
+      "save": "Save changes",
+      "saved": "Saved!",
+      "fullName": "Full name",
+      "phone": "Phone",
+      "city": "City",
+      "bio": "About you",
+      "rate": "Hourly rate (MAD)",
+      "category": "Category",
+      "memberSince": "Member since"
+    }
   }
 }

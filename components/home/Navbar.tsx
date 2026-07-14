@@ -1,20 +1,41 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { Menu, X, Globe } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import type { Dictionary } from '@/app/[lang]/dictionaries'
 
 type NavDict = Dictionary['nav']
 
 const LOCALES = [
-  { code: 'en', label: 'EN' },
-  { code: 'fr', label: 'FR' },
-  { code: 'ar', label: 'AR' },
+  { code: 'en', label: 'EN', name: 'English', native: 'English', flag: 'gb' },
+  { code: 'fr', label: 'FR', name: 'French', native: 'Français', flag: 'fr' },
+  { code: 'ar', label: 'AR', name: 'Arabic', native: 'العربية', flag: 'tn' },
 ]
+
+function FlagIcon({ code, size = 16 }: { code: string; size?: number }) {
+  return (
+    <Image
+      src={`https://flagcdn.com/${code}.svg`}
+      alt=""
+      width={size}
+      height={size}
+      unoptimized
+      className="rounded-sm object-cover"
+    />
+  )
+}
 
 function LocaleSwitcher({ lang }: { lang: string }) {
   const pathname = usePathname()
@@ -25,24 +46,31 @@ function LocaleSwitcher({ lang }: { lang: string }) {
     return segments.join('/') || '/'
   }
 
+  const currentLocale = LOCALES.find((l) => l.code === lang)
+
   return (
-    <div className="flex items-center gap-0.5 rounded-lg border border-border p-0.5">
-      <Globe className="mx-1.5 size-3.5 text-muted-foreground" />
-      {LOCALES.map(({ code, label }) => (
-        <Link
-          key={code}
-          href={localePath(code)}
-          className={cn(
-            'rounded-md px-2 py-1 text-xs font-medium transition-colors',
-            code === lang
-              ? 'bg-primary text-primary-foreground'
-              : 'text-muted-foreground hover:text-foreground'
-          )}
-        >
-          {label}
-        </Link>
-      ))}
-    </div>
+    <Select
+      value={lang}
+      onValueChange={(value) => {
+        if (value) window.location.href = localePath(value)
+      }}
+    >
+      <SelectTrigger className="!h-10 gap-2 rounded-full border-0 bg-muted/50 px-3.5 text-xs font-medium backdrop-blur-sm transition-colors hover:bg-muted [&>span]:flex [&>span]:items-center [&>span]:gap-2">
+        <FlagIcon code={currentLocale?.flag ?? 'gb'} size={18} />
+        <SelectValue>{currentLocale?.label}</SelectValue>
+      </SelectTrigger>
+      <SelectContent className="min-w-[160px]">
+        {LOCALES.map(({ code, label, native, flag }) => (
+          <SelectItem key={code} value={code} className="text-sm">
+            <span className="flex items-center gap-2.5">
+              <FlagIcon code={flag} size={18} />
+              <span className="font-medium">{native}</span>
+              <span className="ml-auto text-xs text-muted-foreground">{label}</span>
+            </span>
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }
 
