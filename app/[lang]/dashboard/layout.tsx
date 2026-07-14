@@ -1,7 +1,7 @@
 import { redirect, notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { hasLocale, getDictionary, type Locale } from '../dictionaries'
-import { DashboardSidebar } from '@/components/dashboard/Sidebar'
+import { DashboardSidebar } from '@/components/dashboard/sidebar'
 
 export default async function DashboardLayout({
   children,
