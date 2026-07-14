@@ -162,7 +162,16 @@
       "noBookings": "Aucune réservation",
       "noBookingsHint": "Quand les clients vous réserveront, ils apparaîtront ici.",
       "viewAll": "Tout voir",
-      "earningsLabel": "MAD"
+      "earningsLabel": "MAD",
+      "charts": {
+        "bookingsByStatus": "Réservations par statut",
+        "monthlyBookings": "Réservations mensuelles",
+        "revenueTrend": "Tendance des revenus",
+        "pending": "En attente",
+        "confirmed": "Confirmée",
+        "completed": "Terminée",
+        "cancelled": "Annulée"
+      }
     },
     "bookings": {
       "title": "Mes réservations",

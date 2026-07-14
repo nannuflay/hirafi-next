@@ -162,7 +162,16 @@
       "noBookings": "No bookings yet",
       "noBookingsHint": "When clients book you, they'll appear here.",
       "viewAll": "View all",
-      "earningsLabel": "MAD"
+      "earningsLabel": "MAD",
+      "charts": {
+        "bookingsByStatus": "Bookings by Status",
+        "monthlyBookings": "Monthly Bookings",
+        "revenueTrend": "Revenue Trend",
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      }
     },
     "bookings": {
       "title": "My Bookings",

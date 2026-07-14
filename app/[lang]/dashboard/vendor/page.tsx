@@ -5,6 +5,9 @@ import { CalendarDays, Clock, CheckCircle2, TrendingUp } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+import { BookingsByStatus } from '@/components/dashboard/charts/bookings-by-status'
+import { MonthlyBookings } from '@/components/dashboard/charts/monthly-bookings'
+import { RevenueTrend } from '@/components/dashboard/charts/revenue-trend'
 
 export default async function VendorDashboardPage({
   params,
@@ -30,14 +33,43 @@ export default async function VendorDashboardPage({
     .select('*, profiles!bookings_client_id_fkey(full_name, avatar_url)')
     .eq('vendor_id', user.id)
     .order('created_at', { ascending: false })
-    .limit(5)
 
   const allBookings = bookings ?? []
+  const recentBookings = allBookings.slice(0, 5)
   const pendingCount = allBookings.filter(b => b.status === 'pending').length
   const completedCount = allBookings.filter(b => b.status === 'completed').length
+  const cancelledCount = allBookings.filter(b => b.status === 'cancelled').length
+  const confirmedCount = allBookings.filter(b => b.status === 'confirmed').length
   const totalRevenue = allBookings
     .filter(b => b.status === 'completed')
     .reduce((sum) => sum + (profile?.vendor_services?.rate ?? 0), 0)
+
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const now = new Date()
+  const monthlyData = Array.from({ length: 6 }, (_, i) => {
+    const d = new Date(now.getFullYear(), now.getMonth() - (5 - i), 1)
+    const month = monthNames[d.getMonth()]
+    const year = d.getFullYear()
+    const count = allBookings.filter(b => {
+      const bd = new Date(b.booking_date)
+      return bd.getMonth() === d.getMonth() && bd.getFullYear() === year
+    }).length
+    return { month, bookings: count }
+  })
+
+  const revenueData = Array.from({ length: 6 }, (_, i) => {
+    const d = new Date(now.getFullYear(), now.getMonth() - (5 - i), 1)
+    const month = monthNames[d.getMonth()]
+    const year = d.getFullYear()
+    const rate = profile?.vendor_services?.rate ?? 0
+    const revenue = allBookings
+      .filter(b => b.status === 'completed' && (() => {
+        const bd = new Date(b.booking_date)
+        return bd.getMonth() === d.getMonth() && bd.getFullYear() === year
+      })())
+      .reduce((sum) => sum + rate, 0)
+    return { month, revenue }
+  })
 
   const statusColor = {
     pending: 'bg-yellow-100 text-yellow-700 border-yellow-200',
@@ -122,6 +154,27 @@ export default async function VendorDashboardPage({
         </Card>
       </div>
 
+      {/* Charts */}
+      <div className="grid gap-6 lg:grid-cols-3">
+        <BookingsByStatus
+          data={{
+            pending: pendingCount,
+            confirmed: confirmedCount,
+            completed: completedCount,
+            cancelled: cancelledCount,
+          }}
+          title={t.overview.charts.bookingsByStatus}
+          labels={{
+            pending: t.overview.charts.pending,
+            confirmed: t.overview.charts.confirmed,
+            completed: t.overview.charts.completed,
+            cancelled: t.overview.charts.cancelled,
+          }}
+        />
+        <MonthlyBookings data={monthlyData} title={t.overview.charts.monthlyBookings} />
+        <RevenueTrend data={revenueData} title={t.overview.charts.revenueTrend} />
+      </div>
+
       {/* Recent bookings + Profile card */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Bookings table */}
@@ -130,7 +183,7 @@ export default async function VendorDashboardPage({
             <CardTitle className="text-lg">{t.overview.recentBookings}</CardTitle>
           </CardHeader>
           <CardContent>
-            {allBookings.length === 0 ? (
+            {recentBookings.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 text-center">
                 <div className="flex size-12 items-center justify-center rounded-2xl bg-muted">
                   <CalendarDays className="size-6 text-muted-foreground" />
@@ -140,7 +193,7 @@ export default async function VendorDashboardPage({
               </div>
             ) : (
               <div className="space-y-3">
-                {allBookings.map((booking) => {
+                {recentBookings.map((booking) => {
                   const client = booking.profiles as unknown as { full_name: string; avatar_url: string | null } | null
                   return (
                     <div

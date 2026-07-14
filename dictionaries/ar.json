@@ -162,7 +162,16 @@
       "noBookings": "لا توجد حجوزات بعد",
       "noBookingsHint": "عندما يحجز عملاؤك سيظهر هنا.",
       "viewAll": "عرض الكل",
-      "earningsLabel": "درهم"
+      "earningsLabel": "درهم",
+      "charts": {
+        "bookingsByStatus": "الحجوزات حسب الحالة",
+        "monthlyBookings": "الحجوزات الشهرية",
+        "revenueTrend": "اتجاه الإيرادات",
+        "pending": "قيد الانتظار",
+        "confirmed": "مؤكدة",
+        "completed": "مكتملة",
+        "cancelled": "ملغاة"
+      }
     },
     "bookings": {
       "title": "حجوزاتي",
