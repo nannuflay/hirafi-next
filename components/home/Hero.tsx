@@ -7,7 +7,7 @@ import type { Dictionary } from '@/app/[lang]/dictionaries'
 
 type HeroDict = Dictionary['hero']
 
-export function Hero({ dict, lang }: { dict: HeroDict; lang: string }) {
+export function Hero({ dict, lang, userRole }: { dict: HeroDict; lang: string; userRole: string | null }) {
   return (
     <section className="relative overflow-hidden bg-background">
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-blue-500/5" />
@@ -34,19 +34,31 @@ export function Hero({ dict, lang }: { dict: HeroDict; lang: string }) {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href={`/${lang}/signup`}
-              className={cn(buttonVariants({ size: 'lg' }), 'group gap-2 px-6')}
-            >
-              {dict.findPro}
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5 rtl:rotate-180" />
-            </Link>
-            <Link
-              href={`/${lang}/signup?role=vendor`}
-              className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'px-6')}
-            >
-              {dict.offerServices}
-            </Link>
+            {userRole ? (
+              <Link
+                href={`/${lang}/dashboard/${userRole}`}
+                className={cn(buttonVariants({ size: 'lg' }), 'group gap-2 px-6')}
+              >
+                {dict.goToDashboard}
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5 rtl:rotate-180" />
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href={`/${lang}/signup`}
+                  className={cn(buttonVariants({ size: 'lg' }), 'group gap-2 px-6')}
+                >
+                  {dict.findPro}
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5 rtl:rotate-180" />
+                </Link>
+                <Link
+                  href={`/${lang}/signup?role=vendor`}
+                  className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'px-6')}
+                >
+                  {dict.offerServices}
+                </Link>
+              </>
+            )}
           </div>
 
           <div className="mt-10 flex flex-wrap gap-5 text-sm text-muted-foreground">

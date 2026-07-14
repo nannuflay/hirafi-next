@@ -2,9 +2,11 @@
   "nav": {
     "howItWorks": "Comment ça marche",
     "services": "Services",
-    "forPros": "Pour les pros",
+    "forPros": "Pour les professionnels",
     "signIn": "Se connecter",
-    "getStarted": "Commencer"
+    "getStarted": "Commencer",
+    "dashboard": "Tableau de bord",
+    "signOut": "Déconnexion"
   },
   "hero": {
     "badge": "Disponible dans les grandes villes du Maroc",
@@ -14,6 +16,7 @@
     "subtitle": "Connectez-vous avec des artisans vérifiés pour la plomberie, l'électricité, le déménagement et plus — directement dans votre ville, sans intermédiaires.",
     "findPro": "Trouver un professionnel",
     "offerServices": "Proposer vos services",
+    "goToDashboard": "Aller au tableau de bord",
     "verifiedPros": "Pros vérifiés",
     "ratedByClients": "Notés par de vrais clients",
     "localToCity": "Locaux dans votre ville",
@@ -175,6 +178,7 @@
     },
     "bookings": {
       "title": "Mes réservations",
+      "subtitle": "Consultez et gérez toutes vos demandes de réservation, confirmations et prestations terminées.",
       "empty": "Aucune réservation trouvée",
       "emptyHint": "Vos réservations apparaîtront ici une fois que les clients commenceront à réserver.",
       "client": "Client",
@@ -234,5 +238,11 @@
       "accept": "Accepter",
       "decline": "Refuser"
     }
+  },
+  "toast": {
+    "bookingAccepted": "Réservation acceptée",
+    "bookingDeclined": "Réservation refusée",
+    "bookingCompleted": "Réservation marquée comme terminée",
+    "actionFailed": "Une erreur s'est produite. Veuillez réessayer."
   }
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
+import { Toaster } from "@/components/ui/sonner";
 import { hasLocale, locales } from "./dictionaries";
 import "../globals.css";
 
@@ -44,6 +45,7 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         {children}
+        <Toaster position="top-center" />
       </body>
     </html>
   );

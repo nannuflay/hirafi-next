@@ -3,9 +3,9 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Check, X, CheckCircle2, CalendarDays } from 'lucide-react'
+import { toast } from 'sonner'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Card, CardContent } from '@/components/ui/card'
 import {
@@ -24,6 +24,7 @@ import {
   TableCell,
 } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
+import { StatusBadge } from '@/components/dashboard/status-badge'
 import type { Database } from '@/types/database'
 import type { Dictionary } from '@/app/[lang]/dictionaries'
 
@@ -31,13 +32,6 @@ type BookingRow = Database['public']['Tables']['bookings']['Row']
 
 interface BookingWithClient extends BookingRow {
   profiles: { full_name: string | null; avatar_url: string | null } | null
-}
-
-const STATUS_STYLE: Record<string, string> = {
-  pending: 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-800',
-  confirmed: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800',
-  completed: 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-800',
-  cancelled: 'bg-red-50 text-red-700 border-red-200 dark:bg-red-950/40 dark:text-red-400 dark:border-red-800',
 }
 
 export function VendorBookingsTable({
@@ -50,6 +44,7 @@ export function VendorBookingsTable({
   dict: Dictionary
 }) {
   const t = dict.dashboard.bookings
+  const toastT = dict.toast
   const router = useRouter()
   const [bookings, setBookings] = useState(initial)
   const [filter, setFilter] = useState<string>('all')
@@ -62,7 +57,15 @@ export function VendorBookingsTable({
   const handleAction = async (id: string, status: 'confirmed' | 'cancelled' | 'completed') => {
     setLoading(id)
     const supabase = createClient()
-    await supabase.from('bookings').update({ status }).eq('id', id)
+    const { error } = await supabase.from('bookings').update({ status }).eq('id', id)
+    if (error) {
+      toast.error(toastT.actionFailed)
+    } else {
+      const msg = status === 'confirmed' ? toastT.bookingAccepted
+        : status === 'cancelled' ? toastT.bookingDeclined
+        : toastT.bookingCompleted
+      toast.success(msg)
+    }
     setBookings((prev) => prev.map((b) => (b.id === id ? { ...b, status } : b)))
     setLoading(null)
     router.refresh()
@@ -71,7 +74,10 @@ export function VendorBookingsTable({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">{t.title}</h1>
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">{t.title}</h1>
+          <p className="mt-1 text-sm text-muted-foreground">{t.subtitle}</p>
+        </div>
         <Select value={filter} onValueChange={(v) => setFilter(v ?? 'all')}>
           <SelectTrigger className="w-[140px]">
             <SelectValue />
@@ -103,7 +109,7 @@ export function VendorBookingsTable({
                 <TableHead>{t.client}</TableHead>
                 <TableHead>{t.date}</TableHead>
                 <TableHead>{t.status}</TableHead>
-                <TableHead className="text-right">{t.actions}</TableHead>
+                <TableHead className="text-end">{t.actions}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -143,19 +149,14 @@ export function VendorBookingsTable({
                       )}
                     </TableCell>
                     <TableCell>
-                      <Badge
-                        variant="outline"
-                        className={cn(
-                          'text-[10px] uppercase tracking-wider',
-                          STATUS_STYLE[booking.status],
-                        )}
-                      >
-                        {t[booking.status as keyof typeof t]}
-                      </Badge>
+                      <StatusBadge
+                        status={booking.status}
+                        label={t[booking.status as keyof typeof t]}
+                      />
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-end">
                       {booking.status === 'pending' && (
-                        <div className="flex justify-end gap-1.5">
+                        <div className="flex ltr:justify-end rtl:justify-start gap-1.5">
                           <Button
                             size="sm"
                             className="h-7 gap-1 px-2.5 text-xs"

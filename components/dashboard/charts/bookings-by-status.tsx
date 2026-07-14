@@ -8,6 +8,7 @@ import {
   type ChartConfig,
 } from '@/components/ui/chart'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { STATUS_CHART } from '@/lib/status-config'
 
 type BookingStatus = 'pending' | 'confirmed' | 'completed' | 'cancelled'
 
@@ -25,13 +26,6 @@ const chartConfig = {
   completed: { label: 'Completed', color: 'var(--chart-1)' },
   cancelled: { label: 'Cancelled', color: 'var(--chart-5)' },
 } satisfies ChartConfig
-
-const STATUS_COLOR: Record<BookingStatus, string> = {
-  pending: 'var(--chart-4)',
-  confirmed: 'var(--chart-2)',
-  completed: 'var(--chart-1)',
-  cancelled: 'var(--chart-5)',
-}
 
 export function BookingsByStatus({ data, title, labels }: BookingsByStatusProps) {
   const total = Object.values(data).reduce((sum, v) => sum + v, 0)
@@ -76,7 +70,7 @@ export function BookingsByStatus({ data, title, labels }: BookingsByStatusProps)
                         <div className="flex items-center gap-2">
                           <span
                             className="size-2 shrink-0 rounded-full"
-                            style={{ backgroundColor: STATUS_COLOR[name as BookingStatus] }}
+                            style={{ backgroundColor: STATUS_CHART[name as BookingStatus] }}
                           />
                           <span className="text-muted-foreground">{label}</span>
                           <span className="ml-auto font-mono font-medium tabular-nums">
@@ -128,7 +122,7 @@ export function BookingsByStatus({ data, title, labels }: BookingsByStatusProps)
               <div key={key} className="flex items-center gap-3">
                 <span
                   className="size-2.5 shrink-0 rounded-sm"
-                  style={{ backgroundColor: STATUS_COLOR[key] }}
+                  style={{ backgroundColor: STATUS_CHART[key] }}
                 />
                 <span className="flex-1 text-sm text-muted-foreground">
                   {labels[key]}

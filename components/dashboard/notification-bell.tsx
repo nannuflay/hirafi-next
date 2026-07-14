@@ -12,10 +12,12 @@ import {
   CalendarCheck,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { cn } from '@/lib/utils'
+import { STATUS_DOT, STATUS_TEXT, STATUS_BORDER_LEFT } from '@/lib/status-config'
 import type { Database } from '@/types/database'
 import type { Dictionary } from '@/app/[lang]/dictionaries'
 
@@ -40,49 +42,25 @@ function timeAgo(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString()
 }
 
-const STATUS_CONFIG: Record<
-  BookingStatus,
-  {
-    color: string
-    bgColor: string
-    borderColor: string
-    icon: typeof Clock
-    badgeVariant: 'default' | 'secondary' | 'destructive' | 'outline'
-    dotColor: string
-  }
-> = {
-  pending: {
-    color: 'text-amber-600 dark:text-amber-400',
-    bgColor: 'bg-amber-50 dark:bg-amber-950/40',
-    borderColor: 'border-l-amber-500',
-    icon: Clock,
-    badgeVariant: 'outline',
-    dotColor: 'bg-amber-500',
-  },
-  confirmed: {
-    color: 'text-emerald-600 dark:text-emerald-400',
-    bgColor: 'bg-emerald-50 dark:bg-emerald-950/40',
-    borderColor: 'border-l-emerald-500',
-    icon: CalendarCheck,
-    badgeVariant: 'default',
-    dotColor: 'bg-emerald-500',
-  },
-  completed: {
-    color: 'text-blue-600 dark:text-blue-400',
-    bgColor: 'bg-blue-50 dark:bg-blue-950/40',
-    borderColor: 'border-l-blue-500',
-    icon: CheckCircle2,
-    badgeVariant: 'secondary',
-    dotColor: 'bg-blue-500',
-  },
-  cancelled: {
-    color: 'text-red-600 dark:text-red-400',
-    bgColor: 'bg-red-50 dark:bg-red-950/40',
-    borderColor: 'border-l-red-500',
-    icon: XCircle,
-    badgeVariant: 'destructive',
-    dotColor: 'bg-red-500',
-  },
+const STATUS_ICON: Record<BookingStatus, typeof Clock> = {
+  pending: Clock,
+  confirmed: CalendarCheck,
+  completed: CheckCircle2,
+  cancelled: XCircle,
+}
+
+const STATUS_BADGE_VARIANT: Record<BookingStatus, 'default' | 'secondary' | 'destructive' | 'outline'> = {
+  pending: 'outline',
+  confirmed: 'default',
+  completed: 'secondary',
+  cancelled: 'destructive',
+}
+
+const STATUS_BG: Record<BookingStatus, string> = {
+  pending: 'bg-amber-50 dark:bg-amber-950/40',
+  confirmed: 'bg-emerald-50 dark:bg-emerald-950/40',
+  completed: 'bg-blue-50 dark:bg-blue-950/40',
+  cancelled: 'bg-red-50 dark:bg-red-950/40',
 }
 
 function NotificationItem({
@@ -90,16 +68,17 @@ function NotificationItem({
   role,
   lang,
   t,
+  toastT,
   onAction,
 }: {
   booking: NotificationBooking
   role: UserRole
   lang: string
   t: Dictionary['dashboard']['notifications']
+  toastT: Dictionary['toast']
   onAction: (id: string, status: 'confirmed' | 'cancelled') => void
 }) {
-  const config = STATUS_CONFIG[booking.status]
-  const Icon = config.icon
+  const Icon = STATUS_ICON[booking.status]
   const name = booking.profiles?.full_name ?? t.unknownUser
   const initials = name
     .split(' ')
@@ -110,10 +89,15 @@ function NotificationItem({
 
   const handleAction = async (status: 'confirmed' | 'cancelled') => {
     const supabase = createClient()
-    await supabase
+    const { error } = await supabase
       .from('bookings')
       .update({ status })
       .eq('id', booking.id)
+    if (error) {
+      toast.error(toastT.actionFailed)
+    } else {
+      toast.success(status === 'confirmed' ? toastT.bookingAccepted : toastT.bookingDeclined)
+    }
     onAction(booking.id, status)
   }
 
@@ -121,7 +105,7 @@ function NotificationItem({
     <div
       className={cn(
         'relative flex gap-3 border-l-2 px-4 py-3 transition-colors hover:bg-muted/50',
-        config.borderColor,
+        STATUS_BORDER_LEFT[booking.status],
       )}
     >
       <div className="relative shrink-0">
@@ -131,7 +115,7 @@ function NotificationItem({
         <span
           className={cn(
             'absolute -right-0.5 -bottom-0.5 size-3 rounded-full ring-2 ring-background',
-            config.dotColor,
+            STATUS_DOT[booking.status],
           )}
         />
       </div>
@@ -147,12 +131,12 @@ function NotificationItem({
               {booking.status === 'cancelled' && t.actionCancelled}
             </span>
           </p>
-          <Icon className={cn('mt-0.5 size-4 shrink-0', config.color)} />
+          <Icon className={cn('mt-0.5 size-4 shrink-0', STATUS_TEXT[booking.status])} />
         </div>
 
         <div className="flex items-center gap-2">
           <Badge
-            variant={config.badgeVariant}
+            variant={STATUS_BADGE_VARIANT[booking.status]}
             className="text-[10px] uppercase tracking-wider"
           >
             {booking.status === 'pending' && t.badgePending}
@@ -241,9 +225,10 @@ export function NotificationBell({
 
   useEffect(() => {
     const supabase = createClient()
+    const channelId = `booking-notifications-${crypto.randomUUID()}`
 
     const channel = supabase
-      .channel('booking-notifications')
+      .channel(channelId)
       .on(
         'postgres_changes',
         {
@@ -369,6 +354,7 @@ export function NotificationBell({
                   role={role}
                   lang={lang}
                   t={t}
+                  toastT={dict.toast}
                   onAction={handleAction}
                 />
               ))

@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation'
 import { getDictionary, type Locale } from '../../dictionaries'
 import { CalendarDays, Clock, CheckCircle2, TrendingUp } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
+import { StatusBadge } from '@/components/dashboard/status-badge'
 import { BookingsByStatus } from '@/components/dashboard/charts/bookings-by-status'
 import { MonthlyBookings } from '@/components/dashboard/charts/monthly-bookings'
 import { RevenueTrend } from '@/components/dashboard/charts/revenue-trend'
@@ -70,13 +70,6 @@ export default async function VendorDashboardPage({
       .reduce((sum) => sum + rate, 0)
     return { month, revenue }
   })
-
-  const statusColor = {
-    pending: 'bg-yellow-100 text-yellow-700 border-yellow-200',
-    confirmed: 'bg-blue-100 text-blue-700 border-blue-200',
-    completed: 'bg-green-100 text-green-700 border-green-200',
-    cancelled: 'bg-red-100 text-red-700 border-red-200',
-  } as const
 
   const initials = (profile?.full_name ?? 'V')
     .split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
@@ -209,12 +202,10 @@ export default async function VendorDashboardPage({
                           })}
                         </p>
                       </div>
-                      <Badge
-                        variant="outline"
-                        className={statusColor[booking.status as keyof typeof statusColor]}
-                      >
-                        {t.bookings[booking.status as keyof typeof t.bookings]}
-                      </Badge>
+                      <StatusBadge
+                        status={booking.status}
+                        label={t.bookings[booking.status as keyof typeof t.bookings]}
+                      />
                     </div>
                   )
                 })}

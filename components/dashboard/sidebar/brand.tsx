@@ -15,7 +15,7 @@ export function Brand({
 }) {
   return (
     <div className={cn(
-      'group/brand relative flex items-center px-4 py-4',
+      'group/brand relative flex items-center gap-2 px-4 py-4',
       collapsed ? 'justify-center px-2' : 'justify-between',
     )}>
       <div className={cn(
@@ -25,7 +25,7 @@ export function Brand({
         <Zap className="size-[16px]" />
       </div>
       {!collapsed && (
-        <span className="flex-1 text-lg font-bold tracking-tight text-sidebar-foreground ml-1">
+        <span className="flex-1 text-lg font-bold tracking-tight text-sidebar-foreground">
           Hirafi
         </span>
       )}

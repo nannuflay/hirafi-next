@@ -6,7 +6,7 @@ import { User, LogOut } from 'lucide-react'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent,
-  DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel,
+  DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuGroup,
 } from '@/components/ui/dropdown-menu'
 import type { Dictionary } from '@/app/[lang]/dictionaries'
 
@@ -38,10 +38,12 @@ function DropdownItems({
 }) {
   return (
     <>
-      <DropdownMenuLabel>
-        <p className="font-medium">{userName}</p>
-        <p className="text-xs text-muted-foreground capitalize">{role}</p>
-      </DropdownMenuLabel>
+      <DropdownMenuGroup>
+        <DropdownMenuLabel>
+          <p className="font-medium">{userName}</p>
+          <p className="text-xs text-muted-foreground capitalize">{role}</p>
+        </DropdownMenuLabel>
+      </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuItem render={<Link href={`/${lang}/dashboard/${role}/profile`} />}>
         <User className="size-4" />

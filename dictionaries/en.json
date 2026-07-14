@@ -4,7 +4,9 @@
     "services": "Services",
     "forPros": "For professionals",
     "signIn": "Sign in",
-    "getStarted": "Get started"
+    "getStarted": "Get started",
+    "dashboard": "Dashboard",
+    "signOut": "Sign out"
   },
   "hero": {
     "badge": "Available across Morocco",
@@ -14,6 +16,7 @@
     "subtitle": "Connect with verified craftsmen for plumbing, electricity, moving, and more — directly in your city, no middlemen.",
     "findPro": "Find a professional",
     "offerServices": "Offer your services",
+    "goToDashboard": "Go to dashboard",
     "verifiedPros": "Verified pros",
     "ratedByClients": "Rated by real clients",
     "localToCity": "Local to your city",
@@ -175,6 +178,7 @@
     },
     "bookings": {
       "title": "My Bookings",
+      "subtitle": "View and manage all your booking requests, confirmations, and completed jobs in one place.",
       "empty": "No bookings found",
       "emptyHint": "Your bookings will appear here once clients start scheduling.",
       "client": "Client",
@@ -234,5 +238,11 @@
       "accept": "Accept",
       "decline": "Decline"
     }
+  },
+  "toast": {
+    "bookingAccepted": "Booking accepted",
+    "bookingDeclined": "Booking declined",
+    "bookingCompleted": "Booking marked as complete",
+    "actionFailed": "Something went wrong. Please try again."
   }
 }

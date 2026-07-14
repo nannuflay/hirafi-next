@@ -74,7 +74,7 @@ function LocaleSwitcher({ lang }: { lang: string }) {
   )
 }
 
-export function Navbar({ lang, dict }: { lang: string; dict: NavDict }) {
+export function Navbar({ lang, dict, userRole }: { lang: string; dict: NavDict; userRole: string | null }) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -98,12 +98,22 @@ export function Navbar({ lang, dict }: { lang: string; dict: NavDict }) {
 
         <div className="hidden items-center gap-3 md:flex">
           <LocaleSwitcher lang={lang} />
-          <Link href={`/${lang}/login`} className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
-            {dict.signIn}
-          </Link>
-          <Link href={`/${lang}/signup`} className={cn(buttonVariants({ size: 'sm' }))}>
-            {dict.getStarted}
-          </Link>
+          {userRole ? (
+            <>
+              <Link href={`/${lang}/dashboard/${userRole}`} className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
+                {dict.dashboard}
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href={`/${lang}/login`} className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
+                {dict.signIn}
+              </Link>
+              <Link href={`/${lang}/signup`} className={cn(buttonVariants({ size: 'sm' }))}>
+                {dict.getStarted}
+              </Link>
+            </>
+          )}
         </div>
 
         <button
@@ -130,14 +140,20 @@ export function Navbar({ lang, dict }: { lang: string; dict: NavDict }) {
           </nav>
           <div className="mt-4 flex flex-col gap-3">
             <LocaleSwitcher lang={lang} />
-            <div className="flex gap-3">
-              <Link href={`/${lang}/login`} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'flex-1 justify-center')}>
-                {dict.signIn}
+            {userRole ? (
+              <Link href={`/${lang}/dashboard/${userRole}`} className={cn(buttonVariants({ size: 'sm' }), 'flex-1 justify-center')}>
+                {dict.dashboard}
               </Link>
-              <Link href={`/${lang}/signup`} className={cn(buttonVariants({ size: 'sm' }), 'flex-1 justify-center')}>
-                {dict.getStarted}
-              </Link>
-            </div>
+            ) : (
+              <div className="flex gap-3">
+                <Link href={`/${lang}/login`} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'flex-1 justify-center')}>
+                  {dict.signIn}
+                </Link>
+                <Link href={`/${lang}/signup`} className={cn(buttonVariants({ size: 'sm' }), 'flex-1 justify-center')}>
+                  {dict.getStarted}
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}
