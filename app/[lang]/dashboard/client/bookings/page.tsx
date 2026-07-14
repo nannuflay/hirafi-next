@@ -1,6 +1,7 @@
+import { createClient } from '@/lib/supabase/server'
+import { notFound } from 'next/navigation'
 import { getDictionary, type Locale } from '../../../dictionaries'
-import { CalendarDays } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
+import { ClientBookingsTable } from '@/components/dashboard/client-bookings-table'
 
 export default async function ClientBookingsPage({
   params,
@@ -8,20 +9,23 @@ export default async function ClientBookingsPage({
   params: Promise<{ lang: string }>
 }) {
   const { lang } = await params
-  const t = (await getDictionary(lang as Locale)).dashboard
+  const dict = await getDictionary(lang as Locale)
+
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) notFound()
+
+  const { data: bookings } = await supabase
+    .from('bookings')
+    .select('*, profiles!bookings_vendor_id_fkey(full_name, avatar_url)')
+    .eq('client_id', user.id)
+    .order('created_at', { ascending: false })
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold tracking-tight">{t.bookings.title}</h1>
-      <Card>
-        <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-          <div className="flex size-12 items-center justify-center rounded-2xl bg-muted">
-            <CalendarDays className="size-6 text-muted-foreground" />
-          </div>
-          <p className="mt-4 text-sm font-medium">{t.bookings.empty}</p>
-          <p className="mt-1 text-xs text-muted-foreground">{t.bookings.emptyHint}</p>
-        </CardContent>
-      </Card>
-    </div>
+    <ClientBookingsTable
+      bookings={(bookings as any) ?? []}
+      lang={lang}
+      dict={dict}
+    />
   )
 }

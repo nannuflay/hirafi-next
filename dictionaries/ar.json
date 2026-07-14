@@ -215,6 +215,24 @@
       "rate": "السعر بالساعة (درهم)",
       "category": "الفئة",
       "memberSince": "عضو منذ"
+    },
+    "notifications": {
+      "title": "الإشعارات",
+      "emptyTitle": "كل شيء محدّث",
+      "emptyDescription": "ستظهر الأنشطة الجديدة هنا",
+      "unknownUser": "مستخدم غير معروف",
+      "viewAll": "عرض الكل",
+      "newLabel": "جديد",
+      "actionPending": "يريد حجز موعد",
+      "actionConfirmed": "تم تأكيد الحجز",
+      "actionCompleted": "تم إتمام الحجز",
+      "actionCancelled": "تم إلغاء الحجز",
+      "badgePending": "جديد",
+      "badgeConfirmed": "مؤكد",
+      "badgeCompleted": "منجز",
+      "badgeCancelled": "ملغي",
+      "accept": "قبول",
+      "decline": "رفض"
     }
   }
 }

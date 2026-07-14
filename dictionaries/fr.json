@@ -215,6 +215,24 @@
       "rate": "Tarif horaire (MAD)",
       "category": "Catégorie",
       "memberSince": "Membre depuis"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "emptyTitle": "Tout est à jour",
+      "emptyDescription": "Les nouvelles activités apparaîtront ici",
+      "unknownUser": "Utilisateur inconnu",
+      "viewAll": "Tout voir",
+      "newLabel": "nouveau",
+      "actionPending": "souhaite vous réserver",
+      "actionConfirmed": "réservation confirmée",
+      "actionCompleted": "réservation terminée",
+      "actionCancelled": "réservation annulée",
+      "badgePending": "Nouveau",
+      "badgeConfirmed": "Confirmée",
+      "badgeCompleted": "Terminée",
+      "badgeCancelled": "Annulée",
+      "accept": "Accepter",
+      "decline": "Refuser"
     }
   }
 }

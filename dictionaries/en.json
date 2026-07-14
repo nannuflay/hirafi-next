@@ -215,6 +215,24 @@
       "rate": "Hourly rate (MAD)",
       "category": "Category",
       "memberSince": "Member since"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "emptyTitle": "You're all caught up",
+      "emptyDescription": "New activity will appear here",
+      "unknownUser": "Unknown user",
+      "viewAll": "View all",
+      "newLabel": "new",
+      "actionPending": "wants to book you",
+      "actionConfirmed": "booking confirmed",
+      "actionCompleted": "booking completed",
+      "actionCancelled": "booking cancelled",
+      "badgePending": "New",
+      "badgeConfirmed": "Confirmed",
+      "badgeCompleted": "Done",
+      "badgeCancelled": "Cancelled",
+      "accept": "Accept",
+      "decline": "Decline"
     }
   }
 }
